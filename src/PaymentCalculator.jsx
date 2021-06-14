@@ -5,13 +5,15 @@ class PaymentCalculator extends React.Component {
   constructor(props){
     super();
     this.state = { 
-      text: 'emp',
-      warning: ''
+      text: 29,
+      warning: '',
+      interestRate: 0,
+      paymentAmount: 0,
     }
     // this.state = { text: '', items: []}
   }
 
-  handleChange = ({target: {value}}) => this.setState({text: value});
+  loanAmountChanged = ({target: {value}}) => this.setState({text: value});
 
   handleSubmit = (e) => {
     e.preventDefault();
@@ -21,7 +23,7 @@ class PaymentCalculator extends React.Component {
     const number = Number(this.state.text);
     if(!isNaN(number) && number > 300)
     {
-      isValidNumber = true; 
+      isValidNumber = true;  //TODO VALIDATE
     }
     
     // const newItem = {
@@ -32,10 +34,13 @@ class PaymentCalculator extends React.Component {
     // this.setState((state) => ({
     //   items: [...this.state.items, newItem],
     //   text:'',    
-    // }));
-
-  
+    // }));  
   }
+
+  interestRateChanged = ({target: {value}}) => this.setState({interestRate: value});
+
+  paymentAmountChanged = ({target: {value}}) => this.setState({paymentAmount: value})
+
 
   render() {
     return (
@@ -45,10 +50,29 @@ class PaymentCalculator extends React.Component {
         <label htmlFor="loanAmount">Loan Amount:</label>
         <br />
         <input 
-        onChange={this.handleChange} 
+        onChange={this.loanAmountChanged} 
         type="text"
         autoComplete="off"
         value={this.state.text}
+        />        
+        <br /><br />
+        <label htmlFor="interestRate">Interest Rate: </label>
+        <br />
+        <input 
+        onChange={this.interestRateChanged} 
+        type="text"
+        autoComplete="off"
+        value={this.state.interestRate}
+        />
+
+        <br /><br />
+        <label htmlFor="paymentAmount">Payment Amount: </label> <br />
+        <input 
+        label htmlFor=""
+        onChange={this.paymentAmountChanged} 
+        type="text"
+        autoComplete="off"
+        value={this.state.paymentAmount}
         />
         <button>Make Payment</button>
       </form>
