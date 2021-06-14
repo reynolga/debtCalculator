@@ -1,40 +1,40 @@
 import React from 'react';
-
+import PaymentTable from './PaymentTable';
 
 class PaymentCalculator extends React.Component {
   constructor(props){
     super();
     this.state = { 
-      text: 29,
+      loanAmount: 29,
       warning: '',
-      interestRate: 0,
-      paymentAmount: 0,
+      interestRate: "0",
+      paymentAmount: "0",
+      payments: [], // {balance, principal, interest}
     }
-    // this.state = { text: '', items: []}
+    // this.state = { loanAmount: '', items: []}
   }
 
-  loanAmountChanged = ({target: {value}}) => this.setState({text: value});
+  loanAmountChanged = ({target: {value}}) => this.setState({loanAmount: value});
 
   handleSubmit = (e) => {
     e.preventDefault();
 
     let isValidNumber = false;    
 
-    const number = Number(this.state.text);
+    const number = Number(this.state.paymentAmount);
     if(!isNaN(number) && number > 300)
     {
       isValidNumber = true;  //TODO VALIDATE
     }
     
-    // const newItem = {
-    //   text: this.state.text,
-    //   id: Date.now(),
-    // }
+     const newItem = {
+       paymentAmount: this.state.paymentAmount,
+       id: Date.now(),
+     }
 
-    // this.setState((state) => ({
-    //   items: [...this.state.items, newItem],
-    //   text:'',    
-    // }));  
+    this.setState((state) => ({
+      payments: [...this.state.payments, newItem],      
+    }));  
   }
 
   interestRateChanged = ({target: {value}}) => this.setState({interestRate: value});
@@ -63,8 +63,7 @@ class PaymentCalculator extends React.Component {
         type="text"
         autoComplete="off"
         value={this.state.interestRate}
-        />
-
+        /> %
         <br /><br />
         <label htmlFor="paymentAmount">Payment Amount: </label> <br />
         <input 
@@ -76,7 +75,7 @@ class PaymentCalculator extends React.Component {
         />
         <button>Make Payment</button>
       </form>
-      {/* <ToDoList items={this.state.items} /> */}
+      {<PaymentTable items={this.state.payments} />}
     </div>);
   }
 }
