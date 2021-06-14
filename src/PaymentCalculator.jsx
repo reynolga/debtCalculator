@@ -16,6 +16,13 @@ class PaymentCalculator extends React.Component {
 
   loanAmountChanged = ({target: {value}}) => this.setState({loanAmount: value});
 
+  calculateInterest = () => {
+    let interest = Number(this.state.interestRate);
+    let interestPerMonth = interest / 100.0 / 12.0; //12 months per year
+    let balance = Number(this.state.loanAmount); //TODO calculate this.
+    return (interestPerMonth * balance);
+  }
+
   handleSubmit = (e) => {
     e.preventDefault();
 
@@ -30,6 +37,7 @@ class PaymentCalculator extends React.Component {
      const newItem = {
        paymentAmount: this.state.paymentAmount,
        id: Date.now(),
+       interest: this.calculateInterest(),
      }
 
     this.setState((state) => ({
