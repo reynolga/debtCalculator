@@ -16,10 +16,21 @@ class PaymentCalculator extends React.Component {
 
   loanAmountChanged = ({target: {value}}) => this.setState({loanAmount: value});
 
+  calculateRemainingBalance = () => {
+    let loanAmount = Number(this.state.loanAmount);
+    console.log(loanAmount);
+    let totalPayments = this.state.payments.reduce((acc, {paymentAmount}) =>  {      
+      return acc + Number(paymentAmount)}, 0);
+      let totalInterest = this.state.payments.reduce((acc, {interest}) =>  {      
+        return acc + Number(interest)}, 0);
+    // console.log(`total payments is: ${totalPayments}`);
+    return loanAmount - totalPayments + totalInterest;
+  }
+
   calculateInterest = () => {
     let interest = Number(this.state.interestRate);
     let interestPerMonth = interest / 100.0 / 12.0; //12 months per year
-    let balance = Number(this.state.loanAmount); //TODO calculate this.
+    let balance = this.calculateRemainingBalance(); //TODO calculate this.    
     return (interestPerMonth * balance);
   }
 
@@ -35,9 +46,10 @@ class PaymentCalculator extends React.Component {
     }
     
      const newItem = {
-       paymentAmount: this.state.paymentAmount,
        id: Date.now(),
+       paymentAmount: this.state.paymentAmount,
        interest: this.calculateInterest(),
+       remainingBalance: this.calculateRemainingBalance()-this.state.paymentAmount + this.calculateInterest(),
      }
 
     this.setState((state) => ({

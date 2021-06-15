@@ -9,7 +9,11 @@ class PaymentTable extends React.Component {
      return (
        <ul>
          {items.map(item => (
-           <li key={item.id}>{item.interest}</li>
+           <li key={item.id}>
+             <div>{item.remainingBalance}</div>  
+             <div>{item.paymentAmount}</div>  
+             <div>{item.interest}</div>  
+           </li>
          ))}
        </ul>
      )
