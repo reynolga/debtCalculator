@@ -2,43 +2,70 @@ import React from 'react'
 import { Chart } from 'react-charts'
  
 class MyChart extends React.Component {
-    constructor(props) {
-      super();
-      this.state = { 
-        
-      }
+    
+   
+  getBalanceHistory = (payments) => {
+    let result = payments.map(({remainingBalance}, i) => [i, Number(remainingBalance)]);
+    return result;
+  };
+
+  getInterestSeries = (payments) => {
+    let interest = payments.map(({interest}, i) => interest);
+    let result = [];
+    let sum = 0;
+    for (let i = 0; i < interest.length; i++){
+      sum += interest[i];
+      result = [...result, [i, sum]]
     }
- 
+    
+    return result;
+  };
    
   render () {
+    let payments = this.props.payments;
 
-  const axes = [
-      { primary: true, type: 'linear', position: 'bottom' },
-      { type: 'linear', position: 'left' }
-    ];
+    
 
-  const data = [
-      {
-        label: 'Balance',
-        data: [[0, 3], [1, 1], [2, 5], [3, 6], [4, 4]],
-      },
-      {
-        label: 'Series 2',
-        data: [[0, 3], [1, 1], [2, 5], [3, 6], [4, 4]]
-      }
-    ];
-  
+    let balanceSeries = [];
+    if(payments) {
+      balanceSeries = this.getBalanceHistory(payments);
+    }
 
-  return (
-    <div
-      style={{
-        width: '400px',
-        height: '300px'
-      }}
-    >
-      <Chart data={data} axes={axes} />
-    </div>);
-  }
+    let interestSeries = [];
+    if(payments) {
+      interestSeries = this.getInterestSeries(payments);
+    }
+
+    console.log(payments);
+    console.log(interestSeries);
+
+    const axes = [
+        { primary: true, type: 'linear', position: 'bottom' },
+        { type: 'linear', position: 'left' }
+      ];
+
+    const data = [
+        {
+          label: 'Balance',
+          data: balanceSeries,
+        },
+        {
+          label: 'Interest',
+          data: interestSeries,
+        }
+      ];
+    
+
+    return (
+      <div
+        style={{
+          width: '400px',
+          height: '300px'
+        }}
+      >
+        <Chart data={data} axes={axes} />
+      </div>);
+    }
   
 }
 
