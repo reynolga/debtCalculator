@@ -1,5 +1,6 @@
 import React from 'react';
 import PaymentTable from './PaymentTable';
+import MyChart from './MyChart';
 
 class PaymentCalculator extends React.Component {
   constructor(props){
@@ -29,7 +30,7 @@ class PaymentCalculator extends React.Component {
     return this.state.payments.reduce((acc, {interest}) =>  {      
       return acc + Number(interest)}, 0);
   }
-  
+
   totalPayments = () => {
     return this.state.payments.reduce((acc, {paymentAmount}) =>  {      
       return acc + Number(paymentAmount)}, 0);
@@ -104,6 +105,7 @@ class PaymentCalculator extends React.Component {
         <button>Make Payment</button>
       </form>
       {<PaymentTable items={this.state.payments} />}
+      <MyChart />
     </div>);
   }
 }
