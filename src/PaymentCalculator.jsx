@@ -19,12 +19,20 @@ class PaymentCalculator extends React.Component {
   calculateRemainingBalance = () => {
     let loanAmount = Number(this.state.loanAmount);
     console.log(loanAmount);
-    let totalPayments = this.state.payments.reduce((acc, {paymentAmount}) =>  {      
-      return acc + Number(paymentAmount)}, 0);
-      let totalInterest = this.state.payments.reduce((acc, {interest}) =>  {      
-        return acc + Number(interest)}, 0);
+    let totalPayments = this.totalPayments();
+    let totalInterest = this.totalInterest();
     // console.log(`total payments is: ${totalPayments}`);
     return loanAmount - totalPayments + totalInterest;
+  }
+
+  totalInterest = () => {
+    return this.state.payments.reduce((acc, {interest}) =>  {      
+      return acc + Number(interest)}, 0);
+  }
+  
+  totalPayments = () => {
+    return this.state.payments.reduce((acc, {paymentAmount}) =>  {      
+      return acc + Number(paymentAmount)}, 0);
   }
 
   calculateInterest = () => {
