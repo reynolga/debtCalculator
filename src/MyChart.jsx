@@ -20,10 +20,14 @@ class MyChart extends React.Component {
     
     return result;
   };
+
+  petPaymentsSeries = (payments) => {
+    let result = payments.map(({paymentAmount}, i) => [i, Number(paymentAmount)]);
+    return result;
+  }
    
   render () {
     let payments = this.props.payments;
-
     
 
     let balanceSeries = [];
@@ -34,6 +38,11 @@ class MyChart extends React.Component {
     let interestSeries = [];
     if(payments) {
       interestSeries = this.getInterestSeries(payments);
+    }
+
+    let paymentsSeries = [];
+    if(payments) {
+      paymentsSeries = this.petPaymentsSeries(payments);
     }
 
     console.log(payments);
@@ -52,6 +61,10 @@ class MyChart extends React.Component {
         {
           label: 'Interest',
           data: interestSeries,
+        },        
+        {
+          label: 'Payments',
+          data: paymentsSeries,
         }
       ];
     
