@@ -1,7 +1,7 @@
 import React from 'react';
 import PaymentTable from './PaymentTable';
 import MyChart from './MyChart';
-
+import './PaymentCalculator.css';
 class PaymentCalculator extends React.Component {
   constructor(props){
     super();
@@ -84,6 +84,7 @@ class PaymentCalculator extends React.Component {
         <label htmlFor="loanAmount">Loan Amount:</label>
         <br />
         <input 
+        class="input-field"
         onChange={this.loanAmountChanged} 
         type="text"
         autoComplete="off"
@@ -93,6 +94,7 @@ class PaymentCalculator extends React.Component {
         <label htmlFor="interestRate">Interest Rate: </label>
         <br />
         <input 
+        class="input-field"
         onChange={this.interestRateChanged} 
         type="text"
         autoComplete="off"
@@ -101,13 +103,14 @@ class PaymentCalculator extends React.Component {
         <br /><br />
         <label htmlFor="paymentAmount">Payment Amount: </label> <br />
         <input 
-        label htmlFor=""
+        label htmlFor="paymentAmount"
+        class="input-field"
         onChange={this.paymentAmountChanged} 
         type="text"
         autoComplete="off"
         value={this.state.paymentAmount}
         />
-        <button>Make Payment</button>
+        <button class="button">Make Payment</button>
       </form>
       {<PaymentTable payments={this.state.payments} />}
       <MyChart payments={this.state.payments} />

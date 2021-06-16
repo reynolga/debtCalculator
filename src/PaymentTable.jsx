@@ -1,4 +1,5 @@
 import React from 'react';
+import './PaymentTable.css';
 
 class PaymentTable extends React.Component {
 
@@ -36,7 +37,7 @@ class PaymentTable extends React.Component {
     }
 
      return (
-       <div>
+       <div class="table">
         <div>Remaining Balance: ${remainingBalance}</div>  
         <div>Total Payments: ${totalPayments}</div>  
         <div>Total Interest Paid: ${totalInterest}</div>    

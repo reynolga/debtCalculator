@@ -75,7 +75,7 @@ const MyChart = (props) => {
           primary: true, 
           type: 'linear', 
           position: 'bottom',
-          hardMax: 249,
+          hardMax: 200,
           hardMin: 0
         },
         { 
@@ -107,7 +107,10 @@ const MyChart = (props) => {
           style={{
             width: '500px',
             height: '400px',
-            marginTop: '50px',         
+            marginTop: '50px',  
+            backgroundColor: 'white',
+            paddingLeft: '30px',
+            marginRight: '80px'
           }}
         >
           <Chart data={data} axes={axes} series={series} tooltip />
