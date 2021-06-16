@@ -15,7 +15,12 @@ class PaymentCalculator extends React.Component {
     // this.state = { loanAmount: '', items: []}
   }
 
-  loanAmountChanged = ({target: {value}}) => this.setState({loanAmount: value});
+  loanAmountChanged = ({target: {value}}) => this.setState(
+    {
+      loanAmount: value,
+      payments: [],
+    }
+    );
 
   calculateRemainingBalance = () => {
     let loanAmount = Number(this.state.loanAmount);
