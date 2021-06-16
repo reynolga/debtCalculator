@@ -116,7 +116,7 @@ class PaymentCalculator extends React.Component {
         <label htmlFor="loanAmount">Loan Amount:</label>
         <br />
         <input 
-        class="input-field"
+        className="input-field"
         onChange={this.loanAmountChanged} 
         type="text"
         autoComplete="off"
@@ -126,7 +126,7 @@ class PaymentCalculator extends React.Component {
         <label htmlFor="interestRate">Interest Rate: </label>
         <br />
         <input 
-        class="input-field"
+        className="input-field"
         onChange={this.interestRateChanged} 
         type="text"
         autoComplete="off"
@@ -134,16 +134,15 @@ class PaymentCalculator extends React.Component {
         /> %
         <br /><br />
         <label htmlFor="paymentAmount">Payment Amount: </label> <br />
-        <input 
-        label htmlFor="paymentAmount"
-        class="input-field"
+        <input         
+        className="input-field"
         onChange={this.paymentAmountChanged} 
         type="text"
         autoComplete="off"
         value={this.state.paymentAmount}
         />        
-        <button class="button">Make Payment</button> <br />
-        <label class="warning">{this.state.warning}</label>
+        <button className="button">Make Payment</button> <br />
+        <label className="warning">{this.state.warning}</label>
       </form>
       {<PaymentTable payments={this.state.payments} />}
       <MyChart payments={this.state.payments} />

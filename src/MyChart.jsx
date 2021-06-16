@@ -88,7 +88,7 @@ const MyChart = (props) => {
           hardMax: loanMax*1.25
         },                
       ], 
-      [loanMax, payments]);
+      [loanMax, xAxisMax]);
 
     const data = [
         {
