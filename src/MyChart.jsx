@@ -26,7 +26,15 @@ const MyChart = (props) => {
   };
 
   const petPaymentsSeries = (payments) => {
-    let result = payments.map(({paymentAmount}, i) => [i, Number(paymentAmount)]);
+    let paymentsArray = payments.map(({paymentAmount}, i) =>  Number(paymentAmount));
+    let result = [];
+    let sum = 0;
+
+    for (let i = 0; i < paymentsArray.length; i++){
+      sum += paymentsArray[i];
+      result = [...result, [i, sum]]
+    }
+
     return result;
   }
   let balanceSeries = [];
@@ -59,6 +67,8 @@ const MyChart = (props) => {
       []
     )
 
+    console.log(loanMax);
+
     const axes = React.useMemo(
       () => [
         { 
@@ -73,10 +83,9 @@ const MyChart = (props) => {
           position: 'left',
           hardMin: 0,
           hardMax: loanMax*1.25
-        }, 
-               
+        },                
       ], 
-      []);
+      [loanMax, payments]);
 
     const data = [
         {
@@ -97,7 +106,9 @@ const MyChart = (props) => {
   return(<div
           style={{
             width: '500px',
-            height: '400px'
+            height: '400px',
+            marginTop: '50px',
+            display: 'flex'            
           }}
         >
           <Chart data={data} axes={axes} series={series} tooltip/>
