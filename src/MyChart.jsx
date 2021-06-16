@@ -1,5 +1,6 @@
 import React from 'react'
 import { Chart } from 'react-charts'
+import { Resizable } from "re-resizable";
  
 const MyChart = (props) => {
        
@@ -75,7 +76,7 @@ const MyChart = (props) => {
           primary: true, 
           type: 'linear', 
           position: 'bottom',
-          hardMax: 200,
+          hardMax: 249,
           hardMin: 0
         },
         { 
@@ -102,18 +103,21 @@ const MyChart = (props) => {
         }
       ];
 
+      
+const style = {
+  backgroundColor: 'white',
+  marginTop: '30px'    
+}
    
-  return(<div
-          style={{
-            width: '500px',
-            height: '400px',
-            marginTop: '50px',  
-            backgroundColor: 'white',
-            paddingLeft: '30px',
-            marginRight: '80px'
-          }}
-        >
-          <Chart data={data} axes={axes} series={series} tooltip />
+  return(<div>
+          <Resizable style={style}
+              defaultSize={{
+                width:420,
+                height:300,
+              }}
+>
+            <Chart data={data} axes={axes} series={series} tooltip />
+          </Resizable>
         </div>);
     
       

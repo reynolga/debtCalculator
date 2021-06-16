@@ -1,11 +1,12 @@
 .input-field {
   padding: 5px;
   font-size: 24px;
+  border-radius: 7px;
 }
 
 .button {
-  height: 42px;
+  height: 42px;  
   border-radius: 10px;
-  margin-left: 25px;
+  margin-left: 15px;
   background-color: white;  
 }
