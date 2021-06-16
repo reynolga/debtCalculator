@@ -1,15 +1,19 @@
 import React from 'react'
 import { Chart } from 'react-charts'
  
-class MyChart extends React.Component {
-    
-   
-  getBalanceHistory = (payments) => {
+const MyChart = (props) => {
+       
+  console.log(props);
+  let payments = props.payments;
+
+  console.log(payments);
+
+  const getBalanceHistory = (payments) => {
     let result = payments.map(({remainingBalance}, i) => [i, Number(remainingBalance)]);
     return result;
   };
 
-  getInterestSeries = (payments) => {
+  const getInterestSeries = (payments) => {
     let interest = payments.map(({interest}, i) => interest);
     let result = [];
     let sum = 0;
@@ -21,37 +25,58 @@ class MyChart extends React.Component {
     return result;
   };
 
-  petPaymentsSeries = (payments) => {
+  const petPaymentsSeries = (payments) => {
     let result = payments.map(({paymentAmount}, i) => [i, Number(paymentAmount)]);
     return result;
   }
-   
-  render () {
-    let payments = this.props.payments;
-    
-
-    let balanceSeries = [];
+  let balanceSeries = [];
     if(payments) {
-      balanceSeries = this.getBalanceHistory(payments);
+      balanceSeries = getBalanceHistory(payments);
     }
 
     let interestSeries = [];
     if(payments) {
-      interestSeries = this.getInterestSeries(payments);
+      interestSeries = getInterestSeries(payments);
     }
 
     let paymentsSeries = [];
     if(payments) {
-      paymentsSeries = this.petPaymentsSeries(payments);
+      paymentsSeries = petPaymentsSeries(payments);
+    }
+
+    let loanMax = 40000;
+    if(payments.length > 0){
+      loanMax = payments[0].remainingBalance;
     }
 
     console.log(payments);
     console.log(interestSeries);
 
-    const axes = [
-        { primary: true, type: 'linear', position: 'bottom' },
-        { type: 'linear', position: 'left' }
-      ];
+    const series = React.useMemo(
+      () => ({
+        showPoints: false
+      }),
+      []
+    )
+
+    const axes = React.useMemo(
+      () => [
+        { 
+          primary: true, 
+          type: 'linear', 
+          position: 'bottom',
+          hardMax: 249,
+          hardMin: 0
+        },
+        { 
+          type: 'linear', 
+          position: 'left',
+          hardMin: 0,
+          hardMax: loanMax*1.25
+        }, 
+               
+      ], 
+      []);
 
     const data = [
         {
@@ -67,19 +92,18 @@ class MyChart extends React.Component {
           data: paymentsSeries,
         }
       ];
-    
 
-    return (
-      <div
-        style={{
-          width: '400px',
-          height: '300px'
-        }}
-      >
-        <Chart data={data} axes={axes} />
-      </div>);
-    }
-  
+   
+  return(<div
+          style={{
+            width: '500px',
+            height: '400px'
+          }}
+        >
+          <Chart data={data} axes={axes} series={series} />
+        </div>);
+    
+      
 }
 
 export default MyChart;
