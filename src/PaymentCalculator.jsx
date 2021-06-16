@@ -7,27 +7,39 @@ class PaymentCalculator extends React.Component {
     super();
     this.state = { 
       loanAmount: 29,
-      warning: '',
+      warning: ' ',
       interestRate: "0",
       paymentAmount: "0",
       payments: [], // {balance, principal, interest}
+      congratulations: ''
     }
-    // this.state = { loanAmount: '', items: []}
   }
 
-  loanAmountChanged = ({target: {value}}) => this.setState(
+  loanAmountChanged = ({target: {value}}) => {
+    if(isNaN(value)){
+      return;
+    }
+    
+    const newItem = {
+      id: Date.now(),
+      paymentAmount: 0,
+      interest: 0,
+      remainingBalance: Number(value)
+    }
+
+    this.setState(
     {
       loanAmount: value,
-      payments: [],
+      payments: [newItem],
     }
-    );
+    )};
 
   calculateRemainingBalance = () => {
     let loanAmount = Number(this.state.loanAmount);
     console.log(loanAmount);
     let totalPayments = this.totalPayments();
     let totalInterest = this.totalInterest();
-    // console.log(`total payments is: ${totalPayments}`);
+
     return loanAmount - totalPayments + totalInterest;
   }
 
@@ -51,29 +63,49 @@ class PaymentCalculator extends React.Component {
   handleSubmit = (e) => {
     e.preventDefault();
 
-    let isValidNumber = false;    
-
     const number = Number(this.state.paymentAmount);
-    if(!isNaN(number) && number > 300)
-    {
-      isValidNumber = true;  //TODO VALIDATE
-    }
-    
-     const newItem = {
-       id: Date.now(),
-       paymentAmount: this.state.paymentAmount,
-       interest: this.calculateInterest(),
-       remainingBalance: this.calculateRemainingBalance()-this.state.paymentAmount + this.calculateInterest(),
-     }
 
-    this.setState((state) => ({
-      payments: [...this.state.payments, newItem],      
-    }));  
+    console.log('Payment is ' + number); 
+    if(isNaN(number)){
+      this.setState((state) => ({
+        warning: 'Please a valid number',      
+      })); 
+    } else if (number < Number(this.state.loanAmount*0.01)) {
+      this.setState((state) => ({
+        warning: 'Please put a value that is greater than 1% of the balance',      
+      })); 
+    } else {      
+      let remainingBalance = this.calculateRemainingBalance() - this.state.paymentAmount + this.calculateInterest();
+      let tempPayment = Number(this.state.paymentAmount); 
+
+      if(remainingBalance < 0){
+        remainingBalance = 0;
+        tempPayment = this.calculateRemainingBalance() + this.calculateInterest() + 1;
+
+        this.setState((state) => ({
+          paymentAmount: 0,
+          congratulations: 'Congratulations your loan has been paid off!!'
+        }))
+      }
+      const newItem = {
+        id: Date.now(),
+        paymentAmount: tempPayment,
+        interest: this.calculateInterest(),
+        remainingBalance: remainingBalance
+      }
+ 
+     this.setState((state) => ({
+       payments: [...this.state.payments, newItem],      
+     })); 
+    } 
   }
 
   interestRateChanged = ({target: {value}}) => this.setState({interestRate: value});
 
-  paymentAmountChanged = ({target: {value}}) => this.setState({paymentAmount: value})
+  paymentAmountChanged = ({target: {value}}) => this.setState({
+      paymentAmount: value,
+      warning: ' '
+    })
 
 
   render() {
@@ -109,11 +141,13 @@ class PaymentCalculator extends React.Component {
         type="text"
         autoComplete="off"
         value={this.state.paymentAmount}
-        />
-        <button class="button">Make Payment</button>
+        />        
+        <button class="button">Make Payment</button> <br />
+        <label class="warning">{this.state.warning}</label>
       </form>
       {<PaymentTable payments={this.state.payments} />}
       <MyChart payments={this.state.payments} />
+      <label class="congratulations">{this.state.congratulations}</label>
     </div>);
   }
 }

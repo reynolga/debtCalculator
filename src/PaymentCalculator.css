@@ -10,3 +10,13 @@
   margin-left: 15px;
   background-color: white;  
 }
+
+.warning {
+  color: red;
+  font-size: 18px;
+}
+
+.congratulations{
+  color: green;
+  margin-top: 20px;
+}

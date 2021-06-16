@@ -55,7 +55,7 @@ const MyChart = (props) => {
 
     let loanMax = 40000;
     if(payments.length > 0){
-      loanMax = payments[0].remainingBalance;
+      loanMax = Number(payments[0].remainingBalance);
     }
 
     console.log(payments);
@@ -63,12 +63,14 @@ const MyChart = (props) => {
 
     const series = React.useMemo(
       () => ({
-        showPoints: false
+        showPoints: true
       }),
       []
     )
 
     console.log(loanMax);
+
+    let xAxisMax = payments?.length+2;
 
     const axes = React.useMemo(
       () => [
@@ -76,8 +78,8 @@ const MyChart = (props) => {
           primary: true, 
           type: 'linear', 
           position: 'bottom',
-          hardMax: 249,
-          hardMin: 0
+          hardMax: xAxisMax,
+          hardMin: -0.1
         },
         { 
           type: 'linear', 
@@ -112,8 +114,8 @@ const style = {
   return(<div>
           <Resizable style={style}
               defaultSize={{
-                width:420,
-                height:300,
+                width: 800,
+                height: 600,
               }}
 >
             <Chart data={data} axes={axes} series={series} tooltip />
