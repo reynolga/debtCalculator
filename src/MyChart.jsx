@@ -107,11 +107,10 @@ const MyChart = (props) => {
           style={{
             width: '500px',
             height: '400px',
-            marginTop: '50px',
-            display: 'flex'            
+            marginTop: '50px',         
           }}
         >
-          <Chart data={data} axes={axes} series={series} tooltip/>
+          <Chart data={data} axes={axes} series={series} tooltip />
         </div>);
     
       

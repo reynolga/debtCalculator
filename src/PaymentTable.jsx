@@ -7,18 +7,6 @@ class PaymentTable extends React.Component {
     return result.toFixed(2);
   }
 
-  estSeries = (payments) => {
-    let interest = payments.map(({interest}, i) => interest);
-    let result = [];
-    let sum = 0;
-    for (let i = 0; i < interest.length; i++){
-      sum += interest[i];
-      result = [...result, [i, sum]]
-    }
-    
-    return result;
-  };
-
   calculateTotalPayment = (payments) => {
     let result = payments.reduce((sum, {paymentAmount}) => sum + Number(paymentAmount), 0);    
     return result.toFixed(2);
@@ -34,6 +22,7 @@ class PaymentTable extends React.Component {
     const {payments} = this.props;
     let totalInterest = 0;
     let totalPayments = 0;
+    let remainingBalance = 0;
 
     console.log(payments);
     if(payments){
@@ -41,13 +30,16 @@ class PaymentTable extends React.Component {
     }
     if(payments){
       totalPayments = this.calculateTotalPayment(payments);
-  }
+    }
+    if(payments.length > 0){
+      remainingBalance = payments[payments.length-1].remainingBalance.toFixed(2);
+    }
 
      return (
        <div>
-        <div>Remaining Balance: {payments.remainingBalance}</div>  
-        <div>Total Payments: {totalPayments}</div>  
-        <div>Total Interest Paid: {totalInterest}</div>    
+        <div>Remaining Balance: ${remainingBalance}</div>  
+        <div>Total Payments: ${totalPayments}</div>  
+        <div>Total Interest Paid: ${totalInterest}</div>    
       </div>         
          )
         }
