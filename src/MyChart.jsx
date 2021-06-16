@@ -100,7 +100,7 @@ const MyChart = (props) => {
             height: '400px'
           }}
         >
-          <Chart data={data} axes={axes} series={series} />
+          <Chart data={data} axes={axes} series={series} tooltip/>
         </div>);
     
       
