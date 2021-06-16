@@ -146,7 +146,7 @@ class PaymentCalculator extends React.Component {
       </form>
       {<PaymentTable payments={this.state.payments} />}
       <MyChart payments={this.state.payments} />
-      <label class="congratulations">{this.state.congratulations}</label>
+      <label className="congratulations">{this.state.congratulations}</label>
     </div>);
   }
 }

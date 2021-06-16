@@ -37,7 +37,7 @@ class PaymentTable extends React.Component {
     }
 
      return (
-       <div class="table">
+       <div className="table">
         <div>Remaining Balance: ${remainingBalance}</div>  
         <div>Total Payments: ${totalPayments}</div>  
         <div>Total Interest Paid: ${totalInterest}</div>    
